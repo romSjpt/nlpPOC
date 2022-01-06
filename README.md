@@ -1,7 +1,9 @@
 ```
-cd .\backend\
+
 npm i -g @nestjs/cli
-nest new backend
+# nest new backend
+cd .\backend\
+
 
 npm install
 npm run start
