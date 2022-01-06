@@ -5,7 +5,7 @@ npm i -g @nestjs/cli
 cd .\backend\
 
 
-npm install
+npm i
 npm run start
 
 ```
