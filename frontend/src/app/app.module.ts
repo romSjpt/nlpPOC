@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
+import { FileUploderComponent } from './file-uploder/file-uploder.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {MatSelectModule} from '@angular/material/select';
     HelloWorldNgIfComponent,
     HelloWorldDependencyInjectionComponent,
     HelloWorldInterpolationComponent,
-    HelloWorldBindingsComponent
+    HelloWorldBindingsComponent,
+    FileUploderComponent
   ],
   imports: [
     BrowserModule,

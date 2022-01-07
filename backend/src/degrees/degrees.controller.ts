@@ -8,6 +8,5 @@ export class DegreesController {
   @Get()
   findAll(): string[] {
     return this.degreesService.getAll();
-    
   }
 }
