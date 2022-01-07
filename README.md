@@ -13,6 +13,7 @@ npm start
 Open your browser and navigate to `http://localhost:3000/`
 
 ```
+npm install -g @angular/cli
 cd .\frontend\
 npm i
 npm run build
