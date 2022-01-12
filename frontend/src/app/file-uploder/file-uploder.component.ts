@@ -1,11 +1,11 @@
-// import { HttpClient, HttpEventType } from '@angular/common/http';
-// import { Subscription,finalize } from 'rxjs';
-
-import { Component, Input, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 import {HttpClient, HttpRequest, HttpEvent, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
+interface IDegree {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-file-uploder',
@@ -13,21 +13,39 @@ import {Observable} from 'rxjs';
   styleUrls: ['./file-uploder.component.css']
 })
 export class FileUploderComponent /*implements OnInit */ {
-
+  configUrl: string = "http://localhost:4200/api/degrees/";
+  degrees: IDegree[] = [];
+  selectedDegree!: IDegree | undefined;
   selectedFiles!: FileList;
 	currentFile!: File | null;
-  msg!: any;
+  msg: any = "";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const degrees = this.http.get<IDegree[]>(this.configUrl);
+    // console.log("responce: ",degrees)
+    degrees
+    .subscribe(sub => {
+        console.log("degrees foreach: ",sub);
+
+        sub.forEach(subDegree=>{
+            const degree: IDegree = {
+              value: subDegree.toString(),
+              viewValue: subDegree.toString()
+            };
+            this.degrees.push(degree);
+        });
+      });
+  }
 	
   selectFile(event: any) {
 
     console.log("selectFile event", event);
     this.selectedFiles = event.target.files;
   }
-  
-  upload() {
 
+
+  upload() {
+    this.msg = "";
     console.log("this.currentFile: ",this.currentFile);
     
 
@@ -35,9 +53,6 @@ export class FileUploderComponent /*implements OnInit */ {
       if(this.currentFile)
       this.uploadFile(this.currentFile)
               .subscribe(response => {
-                    // if(this.selectedFiles)
-                    //   this.selectedFiles.value = '';
-
                     if (response instanceof HttpResponse) {
                         this.msg = response.body;
                         console.log(response.body);
@@ -48,7 +63,14 @@ export class FileUploderComponent /*implements OnInit */ {
   uploadFile(file: File): Observable<HttpEvent<{}>> {
 		const formdata: FormData = new FormData();
 		formdata.append('file', file);
-		const req = new HttpRequest('POST', 'http://localhost:4200/api/files/upload', formdata, {
+    let degree = ""
+    console.log("this.selectedDegree",this.selectedDegree);
+    
+    if(this.selectedDegree){
+      degree = this.selectedDegree.toString();
+    }
+    formdata.append('degree', degree)
+		const req = new HttpRequest('POST', 'http://localhost:4200/api/analyze/', formdata, {
 			  reportProgress: true,
 			  responseType: 'text'
 		});
@@ -56,52 +78,3 @@ export class FileUploderComponent /*implements OnInit */ {
 		return this.http.request(req);
    }
 }
-
-  // @Input()
-  // requiredFileType!: string;
-
-  // fileName = '';
-  // uploadProgress!: number | null;
-  // uploadSub!: Subscription  | null;
-
-  // constructor(private http: HttpClient) { }
-
-//   ngOnInit(): void {
-//   }
-
-//   onFileSelected(event: any) {
-
-//     const file:File = event.target.files[0];
-
-//     if (file) {
-
-//         this.fileName = file.name;
-//         const formData = new FormData();
-//         formData.append("thumbnail", file);
-
-//         const upload$ = this.http.post("/api/thumbnail-upload", formData, {
-//           reportProgress: true,
-//           observe: 'events'
-//       })
-//       .pipe(
-//           finalize(() => this.reset())
-//       );
-    
-//       this.uploadSub = upload$.subscribe(e => {
-//         if (e.type == HttpEventType.UploadProgress) {
-//           this.uploadProgress = Math.round(100 * (e.loaded / event.total));
-//         }
-//       })
-//     }
-//  }
-
-//   cancelUpload() {
-//     this.uploadSub?.unsubscribe();
-//     this.reset();
-//   }
-
-//   reset() {
-//     this.uploadProgress = null;
-//     this.uploadSub = null;
-//   }
-// }

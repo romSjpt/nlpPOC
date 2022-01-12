@@ -10,6 +10,7 @@ import { HelloWorldInterpolationComponent } from './hello-world-interpolation/he
 import { HelloWorldBindingsComponent } from './hello-world-bindings/hello-world-bindings.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import {MatSelectModule} from '@angular/material/select';
 import { FileUploderComponent } from './file-uploder/file-uploder.component';
@@ -30,7 +31,8 @@ import { FileUploderComponent } from './file-uploder/file-uploder.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

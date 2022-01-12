@@ -30,7 +30,7 @@ export class HelloWorldComponent {
     // {value: 'pizza-1', viewValue: 'Pizza'},
     // {value: 'tacos-2', viewValue: 'Tacos'},
   ];
-  configUrl: string = "http://localhost:4200/api/degrees";
+  configUrl: string = "http://localhost:4200/api/degrees/";
 
 
   constructor(private http: HttpClient) {

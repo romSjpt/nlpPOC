@@ -1,7 +1,19 @@
-<div style="text-align:center">
-	<div [innerHtml]='msg'></div>
+<h2>Analyze CV</h2>
+<mat-form-field appearance="fill">
+  <mat-label>Degree Type</mat-label>
+  <mat-select [(value)]="selectedDegree">
+	<mat-option *ngFor="let degree of degrees" [value]="degree.value" >
+	  {{degree.viewValue}}
+	</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<div style="text-align:left">
+	
 	<label>
 		<input type="file" (change)="selectFile($event)">
-		</label>
-		<button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+	</label>
+	<button [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+
+	<pre> {{msg}} </pre> 
 </div>
